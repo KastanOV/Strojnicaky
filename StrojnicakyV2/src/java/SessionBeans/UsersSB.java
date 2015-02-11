@@ -34,12 +34,12 @@ public class UsersSB implements UsersSBLocal {
         if(u.getRole().equals("admin") || u.getRole().equals("observ")){
             return em.createNativeQuery(query.toString(), Users.class).getResultList();
         } else if (u.getRole().equals("vr")){
-            query.append(" and rota = ?rota");
+            query.append(" where rota = ?rota");
             return em.createNativeQuery(query.toString(), Users.class)
                     .setParameter("rota", u.getRota())
                     .getResultList();
         }else if (u.getRole().equals("vc")){
-            query.append(" and ceta = ?ceta");
+            query.append(" where ceta = ?ceta");
             return em.createNativeQuery(query.toString(), Users.class)
                     .setParameter("ceta", u.getCeta())
                     .getResultList();
@@ -56,7 +56,6 @@ public class UsersSB implements UsersSBLocal {
             em.flush();
             return u;
         } else {
-            u = em.find(Users.class, u.getLogin());
             em.merge(u);
             em.flush();
             return u;
@@ -112,7 +111,4 @@ public class UsersSB implements UsersSBLocal {
        }
        return retazecBD;
    }
-
-    
-
 }

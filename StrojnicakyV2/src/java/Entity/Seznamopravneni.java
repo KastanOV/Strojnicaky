@@ -12,8 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KastanNotas
+ * @author Topr
  */
 @Entity
 @Table(name = "seznamopravneni")
@@ -45,9 +44,8 @@ public class Seznamopravneni implements Serializable {
     @Size(max = 100)
     @Column(name = "name")
     private String name;
-    @JoinColumn(name = "hotovostfunkce_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Hotovostfunkce hotovostfunkceId;
+    @ManyToMany(mappedBy = "seznamopravneniCollection")
+    private Collection<Hotovostfunkce> hotovostfunkceCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "seznamopravneniShortname")
     private Collection<Opravneni> opravneniCollection;
 
@@ -74,12 +72,13 @@ public class Seznamopravneni implements Serializable {
         this.name = name;
     }
 
-    public Hotovostfunkce getHotovostfunkceId() {
-        return hotovostfunkceId;
+    @XmlTransient
+    public Collection<Hotovostfunkce> getHotovostfunkceCollection() {
+        return hotovostfunkceCollection;
     }
 
-    public void setHotovostfunkceId(Hotovostfunkce hotovostfunkceId) {
-        this.hotovostfunkceId = hotovostfunkceId;
+    public void setHotovostfunkceCollection(Collection<Hotovostfunkce> hotovostfunkceCollection) {
+        this.hotovostfunkceCollection = hotovostfunkceCollection;
     }
 
     @XmlTransient

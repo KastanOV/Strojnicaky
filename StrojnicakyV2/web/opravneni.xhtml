@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        <ui:composition template="/templates/TemplateUsers.xhtml">
+            <ui:define name="body">
+                <ui:include src="dialogs/editOpravneni.xhtml"/>
+                <div class="container">    
+                    #{usersController.setLoggedUser(loginController.loggedUser)}
+                    <div class="row" style="margin-top: 100px">
+                        <div class="col-md-10">
+                            <h:form id="opravneniTableForm">
+                                <p:dataTable id="opravneniTable" var="item" value="#{opravneniController.allopravneni}"
+                                                    paginator="true"
+                                                    paginatorPosition="bottom"
+                                                    rowKey="#{item.shortname}"
+                                                    rows="10"
+                                                    rowsPerPageTemplate="10,20,30,40,50">
+                                        <f:facet name="header">
+                                            
+                                            <p:commandButton id="createButtonUsers" icon="ui-icon-plus"   value="Přidat opravnění" update=":OpravneniEditForm" oncomplete="PF('OpravneniEditDialog').show()">
+                                                <p:ajax listener="#{opravneniController.prepareNewOpr()}"/>
+                                            </p:commandButton>
+                                        </f:facet>
+                                        <p:column headerText="Zkratka">
+                                            <h:outputText value="#{item.shortname}"/>
+                                        </p:column>
+                                        <p:column headerText="Název">
+                                            <h:outputText value="#{item.name} "/>
+                                        </p:column>
+                                        <p:commandButton value="Editovat" icon="ui-icon-search" update="opravneniTable" oncomplete="PF('OpravneniEditDialog').show()"> 
+                                            <f:setPropertyActionListener value="#{item}" target="#{opravneniController.editedOpr}"  />
+                                        </p:commandButton>
+                                        
+                                        <p:column style="width:130px">
+                                            <p:commandButton value="Smazat" icon="ui-icon-search" update="opravneniTable" >
+                                                <p:ajax listener="#{opravneniController.deleteOpravneni(item)}"/>
+                                            </p:commandButton>
+                                        </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

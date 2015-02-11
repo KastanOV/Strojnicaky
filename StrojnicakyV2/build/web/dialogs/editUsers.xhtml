@@ -7,36 +7,28 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
-
-        <p:dialog id="UsersEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.welcomeHeading}">
+        <p:dialog id="UsersEditDialog" widgetVar="UsersEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Přidat studíjní skupinu">
             <h:form id="UsersEditForm">
                 <h:panelGroup id="display">
-                    <p:outputLabel value="Příjmení" for="lname" />
-                        <p:inputText id="lname" value="#{usersController.editedUser.lname}" title="Příjmení uživatele" required="true" disabled="#{usersController.loggedUser.role != "admin"}"/>
-                        <p:outputLabel value="Příjmení" for="lname" />
-                        <p:inputText id="lname" value="#{usersController.editedUser.lname}" title="Příjmení uživatele" required="true" />
-                        <p:outputLabel value="Jméno" for="fname" />
-                        <p:inputText id="fname" value="#{usersController.editedUser.fname}" title="Příjmení uživatele" required="true" />
-                        <p:outputLabel value="OEČ" for="oec" />
-                        <p:inputText id="oec" value="#{usersController.editedUser.oec}" title="Příjmení uživatele" required="true" />
-                        <p:outputLabel value="Email" for="email" />
-                        <p:inputText id="email" value="#{usersController.editedUser.email}" title="Příjmení uživatele" required="true" />
-                        <p:outputLabel value="Telefón" for="tel" />
-                        <p:inputText id="tel" value="#{usersController.editedUser.phone}" title="Příjmení uživatele" required="true" />
-                        <p:outputLabel value="Role" for="role" />
-                        <p:selectOneMenu id="role" value="#{usersController.editedUser.role}" style="width:125px" disabled="#{usersController.loggedUser.role != "admin"}">
-                            <f:selectItem itemLabel="Příslušník" itemValue="pr" />
-                            <f:selectItem itemLabel="Velitel čety" itemValue="vc" />
-                            <f:selectItem itemLabel="Velitel roty" itemValue="vr" />
-                            <f:selectItem itemLabel="Štáb" itemValue="observ" />
-                        </p:selectOneMenu>
-                        <p:outputLabel value="Rota" for="lname" />
-                        <p:inputText id="lnam" value="#{usersController.editedUser.rota}" title="Příjmení uživatele" required="true" disabled="#{usersController.loggedUser.role != "admin"}"/>
-                        <p:outputLabel value="Četa" for="lname" />
-                        <p:inputText id="lname" value="#{usersController.editedUser.ceta}" title="Příjmení uživatele" required="true" disabled="#{usersController.loggedUser.role != "admin"}"/>
-                        
+                    <p:panelGrid columns="2" rendered="#{usersController.editedUser != null}">
+                        <p:outputLabel value="Příjmení" for="lnamef" />
+                        <p:inputText id="lnamef" value="#{usersController.editedUser.lname}" title="Příjmení uživatele" required="true" />
+                        <p:outputLabel value="Jméno" for="fnamef" />
+                        <p:inputText id="fnamef" value="#{usersController.editedUser.fname}" title="Příjmení uživatele" required="true" />
+                        <p:outputLabel value="OEČ" for="oecf" />
+                        <p:inputText id="oecf" value="#{usersController.editedUser.oec}" title="Příjmení uživatele" required="true" />
+                        <p:outputLabel value="Email" for="emailf" />
+                        <p:inputText id="emailf" value="#{usersController.editedUser.email}" title="Příjmení uživatele" />
+                        <p:outputLabel value="Telefón" for="telf" />
+                        <p:inputText id="telf" value="#{usersController.editedUser.phone}" title="Příjmení uživatele" required="true" />
+                        <p:outputLabel value="Role" for="rolef" />
+                        <p:inputText id="rolef" value="#{usersController.editedUser.role}" title="Role uživate Velitel roty - vr, Velitel čety - vc" disabled="#{!usersController.loggedUserIsAdmin}" />
+                        <p:outputLabel value="Rota" for="rotaf" />
+                        <p:inputText id="rotaf" value="#{usersController.editedUser.rota}" title="Příjmení uživatele" disabled="#{!usersController.loggedUserIsAdmin}" />
+                        <p:outputLabel value="Četa" for="rotaf" />
+                        <p:inputText id="lname" value="#{usersController.editedUser.ceta}" title="Příjmení uživatele" disabled="#{!usersController.loggedUserIsAdmin}" />
+                        <p:commandButton actionListener="#{usersController.saveUser()}" value="Uložit" update="display,:usersTableForm ,:growl" oncomplete="if (!args.validationFailed &amp;&amp; args.saved) PF('UsersEditDialog').hide();"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{usersController.saveUser()}" value="Uložit" update="display,:usersTable ,:growl" oncomplete="handleSubmit(args,'UsersEditDialog');"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

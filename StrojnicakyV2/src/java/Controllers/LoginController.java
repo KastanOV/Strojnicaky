@@ -58,7 +58,7 @@ public class LoginController {
         if(loggedUser.getLname() != null){
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             try {
-                context.redirect("faces/index.xhtml");
+                context.redirect("index.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }

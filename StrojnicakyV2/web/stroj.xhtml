@@ -6,50 +6,78 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
-        #{usersController.logCtrl}
-        
         <ui:composition template="/templates/TemplateUsers.xhtml">
-            <ui:include src="dialogs/createUser.xhtml"/>
-            <ui:include src="dialogs/editUsers.xhtml"/>
-            
             <ui:define name="body">
-                <div class="row" style="margin-top: 30px">
-                    <div class="col-md-4">
-                        <p:fieldset id="availableUsers" legend="Příslušníci">
-                            <p:dataTable id="usersTable" var="usersTable" value="#{usersController.users}"
-                                                paginator="true"
-                                                paginatorPosition="bottom"
-                                                rowKey="#{item.login}"
-                                                rows="10"
-                                                rowsPerPageTemplate="10,20,30,40,50">
-                                    <f:facet name="header">
-                                        <p:commandButton id="createButtonUsers" icon="ui-icon-plus"   value="Přidat příslušníka" actionListener="#{usersController.prepareUser()}" update=":UsersCreateForm" oncomplete="PF('UsersCreateDialog').show()" disabled="#{usersController.editButton}"/>
-                                    </f:facet>
-                                    <p:column headerText="Jméno">
-                                        <h:outputText value="#{usersTable.lname} #{usersTable.fname}"/>
-                                    </p:column>
-                                    <p:column headerText="OEČ">
-                                        <h:outputText value="#{usersTable.oec} "/>
-                                    </p:column>
-                                    <p:column headerText="Rota">
-                                        <h:outputText value="#{usersTable.rota}"/>
-                                    </p:column>
-                                    <p:column headerText="Četa">
-                                        <h:outputText value="#{usersTable.ceta}"/>
-                                    </p:column>
-                                    <p:column style="width:32px">
-                                        <p:commandButton update=":UsersCreateForm" oncomplete="PF('UsersCreateDialog').show()" icon="ui-icon-search">
-                                            <f:setPropertyActionListener value="#{studentTable}" target="#{adminStudentController.editedStudent}" />
-                                        </p:commandButton>
-                                    </p:column>
+                <div class="container">    
+                    #{usersController.setLoggedUser(loginController.loggedUser)}
+                    <ui:include src="dialogs/editUsers.xhtml"/>
+                    <div class="row" style="margin-top: 100px">
+                        <div class="col-md-6">
+                            <h:form id="usersTableForm">
+                                <p:dataTable id="usersTable" var="usersTable" value="#{usersController.users}"
+                                                    paginator="true"
+                                                    paginatorPosition="bottom"
+                                                    rowKey="#{item.login}"
+                                                    rows="10"
+                                                    rowsPerPageTemplate="10,20,30,40,50">
+                                        <f:facet name="header">
+                                            <p:commandButton id="createButtonUsers" icon="ui-icon-plus"   value="Přidat příslušníka" disabled="#{!usersController.editButton}" update=":UsersEditForm" oncomplete="PF('UsersEditDialog').show()">
+                                                <p:ajax listener="#{usersController.prepareUser()}"/>
+                                            </p:commandButton>
+                                        </f:facet>
+                                        <p:column headerText="Jméno">
+                                            <h:outputText value="#{usersTable.lname} #{usersTable.fname}"/>
+                                        </p:column>
+                                        <p:column headerText="OEČ">
+                                            <h:outputText value="#{usersTable.oec} "/>
+                                        </p:column>
+                                        <p:column headerText="Rota">
+                                            <h:outputText value="#{usersTable.rota}"/>
+                                        </p:column>
+                                        <p:column headerText="Četa">
+                                            <h:outputText value="#{usersTable.ceta}"/>
+                                        </p:column>
+                                        <p:column style="width:120px">
+                                            <p:commandButton value="Editovat" icon="ui-icon-search" update=":UsersEditForm" oncomplete="PF('UsersEditDialog').show()">
+                                                <f:setPropertyActionListener value="#{usersTable}" target="#{usersController.editedUser}"  />
+                                            </p:commandButton>
+                                        </p:column>
+                                        <p:column style="width:110px">
+                                            <p:commandButton value="Vybrat" icon="ui-icon-search" update=":strojnicakyTableForm" >
+                                                <p:ajax listener="#{usersController.setEditedUser(usersTable)}"/>
+                                            </p:commandButton>
+                                        </p:column>
                                 </p:dataTable>
-                            </p:fieldset>
-                    </div>
-                    <div class="col-md-4">
-                        
-                    </div>
-                    <div class="col-md-4">
-                    
+                            </h:form>
+                        </div>
+                        <div class="col-md-6">
+                            <h:form id="strojnicakyTableForm">
+                                <p:dataTable id="strojnicakyTable" var="str" value="#{usersController.getOpravneni()}">
+                                    <f:facet name="header">
+                                        <p:autoComplete id="acSimple" value="#{usersController.autoComplHelper}" completeMethod="#{usersController.completeText}" disabled="#{usersController.editedUser == null}"/>
+                                        <p:calendar  id="german2" value="#{usersController.expirationDateTmp}" locale="cs" navigator="true" pattern="dd-MM-yyyy" effect="fold" />
+                                        <p:commandButton value="Přidat opravnění vybranému uživateli" actionListener="#{usersController.addOpravneniForUser()}" update="strojnicakyTable" />
+                                    </f:facet>
+                                    <p:column headerText="Zkratka">
+                                        <h:outputText value="#{str.seznamopravneniShortname.shortname}"/>
+                                    </p:column>
+                                    <p:column headerText="Název">
+                                        <h:outputText value="#{str.seznamopravneniShortname.name}"/>
+                                    </p:column>
+                                    <p:column headerText="Datum expirace" style="width: 220px">
+                                        <p:calendar  id="german" value="#{str.datumexpirace}" locale="cs" navigator="true" pattern="dd-MM-yyyy" effect="fold" >
+                                            
+                                        </p:calendar>
+                                    </p:column>
+                                    <p:column headerText="Upravy" >
+                                        <p:commandButton id="deleteOpravneni" value="Odstranit" actionListener="#{usersController.deleteOpravneni(str)}" update="strojnicakyTable"/>
+                                        <p:commandButton id="ulozOpravneni" value="Ulozit" actionListener="#{usersController.saveOpravneni(str)}" update="strojnicakyTable"/>
+                                    
+                                    </p:column>
+                                    
+                                </p:dataTable>
+                            </h:form>
+                        </div>
                     </div>
                 </div>
             </ui:define>

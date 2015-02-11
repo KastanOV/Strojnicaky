@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <title><ui:insert name="title">Administrátor</ui:insert></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <link rel="stylesheet" href="css/bootstrap.css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/styles.css"/>
+        <script src="js/bootstrap.min.js"></script>  
+    </h:head>
+
+    <h:body>
+        #{loginBean.checkAdminLogin()}
+        <p:growl id="growl" life="3000" />
+        <p:layout fullPage="true" >
+            <p:layoutUnit position="north" size="65">
+                <h:form id="menuForm">
+                    <p:menubar>
+                        <p:menuitem value="Studenti" outcome="stroj" />
+                        <p:menuitem value="Učitelé" outcome="stroj" />
+                        <p:menuitem value="Rozvrhy" outcome="stroj" />
+                        <p:menuitem value="Předměty" outcome="stroj" />
+                        <p:menuitem value="Učty" outcome="stroj" />
+                        <p:menuitem actionListener="#{loginBean.logout()}" iconPos="right" value="Odhlásit" style="float: right contour"/> 
+                    </p:menubar>
+
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="290" header="Vopšny" collapsible="true">
+                <ui:insert name="west"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="south" size="60">
+                <center><p>Created by Kaštura Jaroslav</p></center>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+</html>

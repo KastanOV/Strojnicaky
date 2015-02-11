@@ -14,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -24,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KastanNotas
+ * @author Topr
  */
 @Entity
 @Table(name = "hotovostfunkce")
@@ -43,10 +46,13 @@ public class Hotovostfunkce implements Serializable {
     @Size(max = 100)
     @Column(name = "hotovostnazev")
     private String hotovostnazev;
+    @JoinTable(name = "seznamopravneni_has_hotovostfunkce", joinColumns = {
+        @JoinColumn(name = "hotovostfunkce_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "seznamopravneni_shortname", referencedColumnName = "shortname")})
+    @ManyToMany
+    private Collection<Seznamopravneni> seznamopravneniCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotovostfunkceId")
     private Collection<Clenovehotovosti> clenovehotovostiCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotovostfunkceId")
-    private Collection<Seznamopravneni> seznamopravneniCollection;
 
     public Hotovostfunkce() {
     }
@@ -72,21 +78,21 @@ public class Hotovostfunkce implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Clenovehotovosti> getClenovehotovostiCollection() {
-        return clenovehotovostiCollection;
-    }
-
-    public void setClenovehotovostiCollection(Collection<Clenovehotovosti> clenovehotovostiCollection) {
-        this.clenovehotovostiCollection = clenovehotovostiCollection;
-    }
-
-    @XmlTransient
     public Collection<Seznamopravneni> getSeznamopravneniCollection() {
         return seznamopravneniCollection;
     }
 
     public void setSeznamopravneniCollection(Collection<Seznamopravneni> seznamopravneniCollection) {
         this.seznamopravneniCollection = seznamopravneniCollection;
+    }
+
+    @XmlTransient
+    public Collection<Clenovehotovosti> getClenovehotovostiCollection() {
+        return clenovehotovostiCollection;
+    }
+
+    public void setClenovehotovostiCollection(Collection<Clenovehotovosti> clenovehotovostiCollection) {
+        this.clenovehotovostiCollection = clenovehotovostiCollection;
     }
 
     @Override
