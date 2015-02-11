@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+        #{usersController.logCtrl}
+        
+        <ui:composition template="/templates/TemplateUsers.xhtml">
+            <ui:include src="dialogs/createUser.xhtml"/>
+            <ui:include src="dialogs/editUsers.xhtml"/>
+            
+            <ui:define name="body">
+                <div class="row" style="margin-top: 30px">
+                    <div class="col-md-4">
+                        <p:fieldset id="availableUsers" legend="Příslušníci">
+                            <p:dataTable id="usersTable" var="usersTable" value="#{usersController.users}"
+                                                paginator="true"
+                                                paginatorPosition="bottom"
+                                                rowKey="#{item.login}"
+                                                rows="10"
+                                                rowsPerPageTemplate="10,20,30,40,50">
+                                    <f:facet name="header">
+                                        <p:commandButton id="createButtonUsers" icon="ui-icon-plus"   value="Přidat příslušníka" actionListener="#{usersController.prepareUser()}" update=":UsersCreateForm" oncomplete="PF('UsersCreateDialog').show()" disabled="#{usersController.editButton}"/>
+                                    </f:facet>
+                                    <p:column headerText="Jméno">
+                                        <h:outputText value="#{usersTable.lname} #{usersTable.fname}"/>
+                                    </p:column>
+                                    <p:column headerText="OEČ">
+                                        <h:outputText value="#{usersTable.oec} "/>
+                                    </p:column>
+                                    <p:column headerText="Rota">
+                                        <h:outputText value="#{usersTable.rota}"/>
+                                    </p:column>
+                                    <p:column headerText="Četa">
+                                        <h:outputText value="#{usersTable.ceta}"/>
+                                    </p:column>
+                                    <p:column style="width:32px">
+                                        <p:commandButton update=":UsersCreateForm" oncomplete="PF('UsersCreateDialog').show()" icon="ui-icon-search">
+                                            <f:setPropertyActionListener value="#{studentTable}" target="#{adminStudentController.editedStudent}" />
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:fieldset>
+                    </div>
+                    <div class="col-md-4">
+                        
+                    </div>
+                    <div class="col-md-4">
+                    
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
