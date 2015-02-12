@@ -35,14 +35,9 @@ public class UsersController {
     private Boolean editButton;
     private Boolean loggedUserIsAdmin;
     private Date expirationDateTmp;
+    private Opravneni editeOpravneni;
 
-    public Date getExpirationDateTmp() {
-        return expirationDateTmp;
-    }
-
-    public void setExpirationDateTmp(Date expirationDateTmp) {
-        this.expirationDateTmp = expirationDateTmp;
-    }
+    
     
     private String AutoComplHelper;
 
@@ -101,9 +96,9 @@ public class UsersController {
     public List<Users> getUsers(){
         return usersSB.getUsers(loggedUser);
     }
-    public void saveOpravneni(Opravneni o){
+    public void saveOpravneni(){
         //TODO Nekde tu je chyba jak cip 
-        oprSB.saveOpravneni(o);
+        oprSB.saveOpravneni(editeOpravneni);
     }
     public List<Opravneni> getOpravneni(){
         if(editedUser != null){
@@ -147,5 +142,20 @@ public class UsersController {
     }
     public void testmethod(){
         
+    }
+    public Opravneni getEditeOpravneni() {
+        return editeOpravneni;
+    }
+
+    public void setEditeOpravneni(Opravneni editeOpravneni) {
+        this.editeOpravneni = editeOpravneni;
+    }
+
+    public Date getExpirationDateTmp() {
+        return expirationDateTmp;
+    }
+
+    public void setExpirationDateTmp(Date expirationDateTmp) {
+        this.expirationDateTmp = expirationDateTmp;
     }
 }

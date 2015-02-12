@@ -5,21 +5,33 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="head">
+        <style type="text/css">
+            .old {
+                background-color: #6CE26C !important;
+                background-image: none !important;
+                color: #000000 !important;
+            }
+        </style>
+    </ui:define>
     <h:body>
         <ui:composition template="/templates/TemplateUsers.xhtml">
             <ui:define name="body">
                 <div class="container">    
                     #{usersController.setLoggedUser(loginController.loggedUser)}
                     <ui:include src="dialogs/editUsers.xhtml"/>
+                    <ui:include src="dialogs/selectOpravneni.xhtml"/>
                     <div class="row" style="margin-top: 100px">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h:form id="usersTableForm">
                                 <p:dataTable id="usersTable" var="usersTable" value="#{usersController.users}"
                                                     paginator="true"
                                                     paginatorPosition="bottom"
                                                     rowKey="#{item.login}"
                                                     rows="10"
-                                                    rowsPerPageTemplate="10,20,30,40,50">
+                                                    rowsPerPageTemplate="10,20,30,40,50"
+                                                    rowStyleClass="background-color: #6CE26C;"
+                                                        >
                                         <f:facet name="header">
                                             <p:commandButton id="createButtonUsers" icon="ui-icon-plus"   value="Přidat příslušníka" disabled="#{!usersController.editButton}" update=":UsersEditForm" oncomplete="PF('UsersEditDialog').show()">
                                                 <p:ajax listener="#{usersController.prepareUser()}"/>
@@ -29,12 +41,12 @@
                                             <h:outputText value="#{usersTable.lname} #{usersTable.fname}"/>
                                         </p:column>
                                         <p:column headerText="OEČ">
-                                            <h:outputText value="#{usersTable.oec} "/>
+                                            <h:outputText value="#{usersTable.oec}"/>
                                         </p:column>
-                                        <p:column headerText="Rota">
+                                    <p:column headerText="Rota" rendered="#{usersController.loggedUserIsAdmin}">
                                             <h:outputText value="#{usersTable.rota}"/>
                                         </p:column>
-                                        <p:column headerText="Četa">
+                                        <p:column headerText="Četa" rendered="#{usersController.loggedUserIsAdmin}">
                                             <h:outputText value="#{usersTable.ceta}"/>
                                         </p:column>
                                         <p:column style="width:120px">
@@ -50,7 +62,7 @@
                                 </p:dataTable>
                             </h:form>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-7">
                             <h:form id="strojnicakyTableForm">
                                 <p:dataTable id="strojnicakyTable" var="str" value="#{usersController.getOpravneni()}">
                                     <f:facet name="header">
@@ -65,13 +77,16 @@
                                         <h:outputText value="#{str.seznamopravneniShortname.name}"/>
                                     </p:column>
                                     <p:column headerText="Datum expirace" style="width: 220px">
-                                        <p:calendar  id="german" value="#{str.datumexpirace}" locale="cs" navigator="true" pattern="dd-MM-yyyy" effect="fold" >
+                                        
+                                        <p:calendar   id="german" value="#{str.datumexpirace}" locale="cs" pattern="dd-MMMMMMMM-yyyy" disabled="true" >
                                             
                                         </p:calendar>
                                     </p:column>
                                     <p:column headerText="Upravy" >
                                         <p:commandButton id="deleteOpravneni" value="Odstranit" actionListener="#{usersController.deleteOpravneni(str)}" update="strojnicakyTable"/>
-                                        <p:commandButton id="ulozOpravneni" value="Ulozit" actionListener="#{usersController.saveOpravneni(str)}" update="strojnicakyTable"/>
+                                        <p:commandButton id="ulozOpravneni" value="Aktualizovat" update=":OpravneniUsersEditForm" oncomplete="PF('OpravneniUsersEditDialog').show()">
+                                            <p:ajax listener="#{usersController.setEditeOpravneni(str)}" />
+                                        </p:commandButton>
                                     
                                     </p:column>
                                     
