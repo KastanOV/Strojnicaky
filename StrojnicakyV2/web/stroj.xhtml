@@ -5,15 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="head">
-        <style type="text/css">
-            .old {
-                background-color: #6CE26C !important;
-                background-image: none !important;
-                color: #000000 !important;
-            }
-        </style>
-    </ui:define>
+    
     <h:body>
         <ui:composition template="/templates/TemplateUsers.xhtml">
             <ui:define name="body">
@@ -21,16 +13,24 @@
                     #{usersController.setLoggedUser(loginController.loggedUser)}
                     <ui:include src="dialogs/editUsers.xhtml"/>
                     <ui:include src="dialogs/selectOpravneni.xhtml"/>
+                    <style type="text/css">
+                        .success {
+                            background-color: #dff0d8;
+                        }
+                        .warning {
+                            background-color: #f2dede;
+                        }
+                    </style>
+                    
                     <div class="row" style="margin-top: 100px">
                         <div class="col-md-5">
                             <h:form id="usersTableForm">
                                 <p:dataTable id="usersTable" var="usersTable" value="#{usersController.users}"
                                                     paginator="true"
                                                     paginatorPosition="bottom"
-                                                    rowKey="#{item.login}"
                                                     rows="10"
                                                     rowsPerPageTemplate="10,20,30,40,50"
-                                                    rowStyleClass="background-color: #6CE26C;"
+                                                    rowStyleClass="#{usersController.getBackgrounDangerColor(usersTable) ? 'success' : 'warning'}"
                                                         >
                                         <f:facet name="header">
                                             <p:commandButton id="createButtonUsers" icon="ui-icon-plus"   value="Přidat příslušníka" disabled="#{!usersController.editButton}" update=":UsersEditForm" oncomplete="PF('UsersEditDialog').show()">
@@ -64,7 +64,8 @@
                         </div>
                         <div class="col-md-7">
                             <h:form id="strojnicakyTableForm">
-                                <p:dataTable id="strojnicakyTable" var="str" value="#{usersController.getOpravneni()}">
+                                <p:dataTable id="strojnicakyTable" var="str" value="#{usersController.getOpravneni()}"
+                                             rowStyleClass="#{usersController.getBackgrounDangerColorO(str) ? 'success' : 'warning'}">
                                     <f:facet name="header">
                                         <p:autoComplete id="acSimple" value="#{usersController.autoComplHelper}" completeMethod="#{usersController.completeText}" disabled="#{usersController.editedUser == null}"/>
                                         <p:calendar  id="german2" value="#{usersController.expirationDateTmp}" locale="cs" navigator="true" pattern="dd-MM-yyyy" effect="fold" />

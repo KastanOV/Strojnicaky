@@ -11,6 +11,7 @@ import Entity.Users;
 import SessionBeans.UsersSBLocal;
 import SessionBeans.opravneniSBLocal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -36,9 +37,46 @@ public class UsersController {
     private Boolean loggedUserIsAdmin;
     private Date expirationDateTmp;
     private Opravneni editeOpravneni;
+   
 
-    
-    
+    public Boolean getBackgrounDangerColor(Users u) {
+        Boolean firstrun = true;
+        Date warnDate = new Date();
+        if(u.getOpravneniCollection().isEmpty()) return true;
+        for(Opravneni item : u.getOpravneniCollection()){
+            if(firstrun){
+                firstrun = false;
+                warnDate = new Date();
+                warnDate.setTime(item.getDatumexpirace().getTime());
+            }
+            if(warnDate.compareTo(item.getDatumexpirace()) >= 0){
+                warnDate.setTime(item.getDatumexpirace().getTime());
+            }
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(warnDate);
+        Date test1 = cal.getTime();
+        cal.add(Calendar.DATE, -60);
+        Date testDate = cal.getTime();//minus number would decrement the days
+        Date actualDate = new Date();
+        if(testDate.compareTo(actualDate) >= 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public Boolean getBackgrounDangerColorO(Opravneni u){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(u.getDatumexpirace());
+        cal.add(Calendar.DATE, -60);
+        Date testDate = cal.getTime();
+        Date actualDate = new Date();
+        if(testDate.compareTo(actualDate) >= 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
     private String AutoComplHelper;
 
     public String getAutoComplHelper() {
