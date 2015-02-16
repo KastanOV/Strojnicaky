@@ -108,7 +108,7 @@ public class UsersController {
             System.err.println("Error");
         }
         tmp.setDatumexpirace(expirationDateTmp);
-        tmp.setSeznamopravneniShortname(oprTmp);
+        tmp.setSeznamopravneniId(oprTmp);
         tmp.setUsersLogin(editedUser);
         oprSB.addOpravneni(tmp);
     }

@@ -46,9 +46,9 @@ public class Opravneni implements Serializable {
     @Column(name = "datumexpirace")
     @Temporal(TemporalType.DATE)
     private Date datumexpirace;
-    @JoinColumn(name = "seznamopravneni_shortname", referencedColumnName = "shortname")
+    @JoinColumn(name = "seznamopravneni_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Seznamopravneni seznamopravneniShortname;
+    private Seznamopravneni seznamopravneniId;
     @JoinColumn(name = "users_login", referencedColumnName = "login")
     @ManyToOne(optional = false)
     private Users usersLogin;
@@ -81,12 +81,12 @@ public class Opravneni implements Serializable {
         this.datumexpirace = datumexpirace;
     }
 
-    public Seznamopravneni getSeznamopravneniShortname() {
-        return seznamopravneniShortname;
+    public Seznamopravneni getSeznamopravneniId() {
+        return seznamopravneniId;
     }
 
-    public void setSeznamopravneniShortname(Seznamopravneni seznamopravneniShortname) {
-        this.seznamopravneniShortname = seznamopravneniShortname;
+    public void setSeznamopravneniId(Seznamopravneni seznamopravneniId) {
+        this.seznamopravneniId = seznamopravneniId;
     }
 
     public Users getUsersLogin() {

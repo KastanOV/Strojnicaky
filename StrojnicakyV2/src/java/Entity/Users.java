@@ -93,9 +93,9 @@ public class Users implements Serializable {
     @NotNull
     @Column(name = "ceta")
     private int ceta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersLogin")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "usersLogin")
     private Collection<Clenovehotovosti> clenovehotovostiCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersLogin")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "usersLogin")
     private Collection<Opravneni> opravneniCollection;
 
     public Users() {

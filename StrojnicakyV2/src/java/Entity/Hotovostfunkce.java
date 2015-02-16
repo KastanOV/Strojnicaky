@@ -48,7 +48,7 @@ public class Hotovostfunkce implements Serializable {
     private String hotovostnazev;
     @JoinTable(name = "seznamopravneni_has_hotovostfunkce", joinColumns = {
         @JoinColumn(name = "hotovostfunkce_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "seznamopravneni_shortname", referencedColumnName = "shortname")})
+        @JoinColumn(name = "seznamopravneni_id", referencedColumnName = "id")})
     @ManyToMany
     private Collection<Seznamopravneni> seznamopravneniCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hotovostfunkceId")

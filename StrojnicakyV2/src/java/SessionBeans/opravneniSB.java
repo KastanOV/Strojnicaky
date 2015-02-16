@@ -44,7 +44,7 @@ public class opravneniSB implements opravneniSBLocal {
 
     @Override
     public void deleteOpravneni(Seznamopravneni s) {
-        em.remove(em.find(Seznamopravneni.class, s.getShortname()));
+        em.remove(em.find(Seznamopravneni.class, s.getId()));
     }
 
     @Override
@@ -78,7 +78,9 @@ public class opravneniSB implements opravneniSBLocal {
 
     @Override
     public Seznamopravneni getSenzmaopravneniByID(String s) {
-        return em.find(Seznamopravneni.class, s);
+        return (Seznamopravneni) em.createNativeQuery("SELECT * FROM strojnicaky.seznamopravneni where shortname = ?ss", Seznamopravneni.class)
+                .setParameter("ss", s)
+                .getSingleResult();
     }
 
     @Override

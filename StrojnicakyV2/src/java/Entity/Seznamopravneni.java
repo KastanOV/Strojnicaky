@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -32,28 +34,41 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Seznamopravneni.findAll", query = "SELECT s FROM Seznamopravneni s"),
     @NamedQuery(name = "Seznamopravneni.findByShortname", query = "SELECT s FROM Seznamopravneni s WHERE s.shortname = :shortname"),
-    @NamedQuery(name = "Seznamopravneni.findByName", query = "SELECT s FROM Seznamopravneni s WHERE s.name = :name")})
+    @NamedQuery(name = "Seznamopravneni.findByName", query = "SELECT s FROM Seznamopravneni s WHERE s.name = :name"),
+    @NamedQuery(name = "Seznamopravneni.findById", query = "SELECT s FROM Seznamopravneni s WHERE s.id = :id")})
 public class Seznamopravneni implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "shortname")
     private String shortname;
-    @Size(max = 100)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @ManyToMany(mappedBy = "seznamopravneniCollection")
     private Collection<Hotovostfunkce> hotovostfunkceCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "seznamopravneniShortname")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "seznamopravneniId")
     private Collection<Opravneni> opravneniCollection;
 
     public Seznamopravneni() {
     }
 
-    public Seznamopravneni(String shortname) {
+    public Seznamopravneni(Integer id) {
+        this.id = id;
+    }
+
+    public Seznamopravneni(Integer id, String shortname, String name) {
+        this.id = id;
         this.shortname = shortname;
+        this.name = name;
     }
 
     public String getShortname() {
@@ -70,6 +85,14 @@ public class Seznamopravneni implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @XmlTransient
@@ -93,7 +116,7 @@ public class Seznamopravneni implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (shortname != null ? shortname.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -104,7 +127,7 @@ public class Seznamopravneni implements Serializable {
             return false;
         }
         Seznamopravneni other = (Seznamopravneni) object;
-        if ((this.shortname == null && other.shortname != null) || (this.shortname != null && !this.shortname.equals(other.shortname))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -112,7 +135,7 @@ public class Seznamopravneni implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.Seznamopravneni[ shortname=" + shortname + " ]";
+        return "Entity.Seznamopravneni[ id=" + id + " ]";
     }
     
 }
