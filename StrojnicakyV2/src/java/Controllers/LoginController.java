@@ -26,7 +26,6 @@ public class LoginController {
     @EJB
     LoginSBLocal loginSB;
     
-
     Users loggedUser;
     private Boolean loggedUserIsAdmin;
 

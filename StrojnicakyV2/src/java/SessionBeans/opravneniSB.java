@@ -8,6 +8,8 @@ package SessionBeans;
 import Entity.Opravneni;
 import Entity.Seznamopravneni;
 import Entity.Users;
+import com.sun.org.apache.xalan.internal.xsltc.runtime.BasisLibrary;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -94,5 +96,18 @@ public class opravneniSB implements opravneniSBLocal {
             System.out.println("Nasrat");
         }
         
+    }
+
+    @Override
+    public Date getMinDateFromUser(Users u) {
+        Date tmp; 
+        try {
+            tmp = (Date) em.createNativeQuery("SELECT MIN(datumexpirace) FROM strojnicaky.opravneni where users_login = ?login")
+                .setParameter("login", u.getLogin())
+                .getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+        return tmp;
     }
 }

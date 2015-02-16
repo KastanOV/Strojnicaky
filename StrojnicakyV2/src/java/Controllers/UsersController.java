@@ -42,17 +42,10 @@ public class UsersController {
     public Boolean getBackgrounDangerColor(Users u) {
         Boolean firstrun = true;
         Date warnDate = new Date();
-        if(u.getOpravneniCollection().isEmpty()) return true;
-        for(Opravneni item : u.getOpravneniCollection()){
-            if(firstrun){
-                firstrun = false;
-                warnDate = new Date();
-                warnDate.setTime(item.getDatumexpirace().getTime());
-            }
-            if(warnDate.compareTo(item.getDatumexpirace()) >= 0){
-                warnDate.setTime(item.getDatumexpirace().getTime());
-            }
-        }
+        warnDate = oprSB.getMinDateFromUser(u);
+        if(warnDate == null) 
+            return true;
+        
         Calendar cal = Calendar.getInstance();
         cal.setTime(warnDate);
         Date test1 = cal.getTime();

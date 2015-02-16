@@ -16,7 +16,7 @@
                         <p:outputLabel value="Název" for="fnamef" />
                         <p:inputText id="fnamef" value="#{opravneniController.editedOpr.name}" title="Celý název" required="true" />
                         
-                        <p:commandButton actionListener="#{opravneniController.saveOpravneni()}" value="Uložit" update="display,:opravneniTableForm ,:growl" oncomplete="if (!args.validationFailed &amp;&amp; args.saved) PF('OpravneniEditDialog').hide();"/>
+                        <p:commandButton actionListener="#{opravneniController.saveOpravneni()}" value="Uložit" update="display,:opravneniTableForm :usersTableForm ,:growl" oncomplete="if (!args.validationFailed &amp;&amp; args.saved) PF('OpravneniEditDialog').hide();"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

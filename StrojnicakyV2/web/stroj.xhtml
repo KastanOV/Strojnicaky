@@ -69,7 +69,7 @@
                                     <f:facet name="header">
                                         <p:autoComplete id="acSimple" value="#{usersController.autoComplHelper}" completeMethod="#{usersController.completeText}" disabled="#{usersController.editedUser == null}"/>
                                         <p:calendar  id="german2" value="#{usersController.expirationDateTmp}" locale="cs" navigator="true" pattern="dd-MM-yyyy" effect="fold" />
-                                        <p:commandButton value="Přidat opravnění vybranému uživateli" actionListener="#{usersController.addOpravneniForUser()}" update="strojnicakyTable" />
+                                        <p:commandButton value="Přidat opravnění vybranému uživateli" actionListener="#{usersController.addOpravneniForUser()}" update="strojnicakyTable :usersTableForm" />
                                     </f:facet>
                                     <p:column headerText="Zkratka">
                                         <h:outputText value="#{str.seznamopravneniId.shortname}"/>
@@ -84,8 +84,8 @@
                                         </p:calendar>
                                     </p:column>
                                     <p:column headerText="Upravy" >
-                                        <p:commandButton id="deleteOpravneni" value="Odstranit" actionListener="#{usersController.deleteOpravneni(str)}" update="strojnicakyTable"/>
-                                        <p:commandButton id="ulozOpravneni" value="Aktualizovat" update=":OpravneniUsersEditForm" oncomplete="PF('OpravneniUsersEditDialog').show()">
+                                        <p:commandButton id="deleteOpravneni" value="Odstranit" actionListener="#{usersController.deleteOpravneni(str)}" update="strojnicakyTable :usersTableForm"/>
+                                        <p:commandButton id="ulozOpravneni" value="Aktualizovat" update=":OpravneniUsersEditForm :usersTableForm" oncomplete="PF('OpravneniUsersEditDialog').show()">
                                             <p:ajax listener="#{usersController.setEditeOpravneni(str)}" />
                                         </p:commandButton>
                                     

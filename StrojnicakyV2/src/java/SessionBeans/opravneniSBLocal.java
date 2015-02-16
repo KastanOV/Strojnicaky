@@ -8,6 +8,7 @@ package SessionBeans;
 import Entity.Opravneni;
 import Entity.Seznamopravneni;
 import Entity.Users;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -26,4 +27,5 @@ public interface opravneniSBLocal {
     public void addOpravneni(Opravneni s);
     public void saveOpravneni(Opravneni o);
     public Seznamopravneni getSenzmaopravneniByID(String s);
+    public Date getMinDateFromUser(Users u);
 }
