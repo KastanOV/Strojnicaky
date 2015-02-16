@@ -18,12 +18,14 @@ and open the template in the editor.
         <script src="js/bootstrap.min.js"></script>    
     </h:head>
     <body>
+        
         <div class="container">
+            <p:growl id="growl" life="3000"  />
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-md-offset-4">
                     <h1 class="text-center login-title">Přihlásit do programu ZUUI</h1>
                     <div class="account-wall">
-                        <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120" alt=""/>
+                        <img class="profile-img" src="css/photo.png" alt=""/>
                         <h:form class="form-signin">
                             <p:inputText type="text" class="form-control" placeholder="Email" value="#{loginController.loggedUser.login}"/>
                             <p:inputText type="password" class="form-control" placeholder="Password" value="#{loginController.loggedUser.password}"/>

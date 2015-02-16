@@ -17,5 +17,6 @@ import javax.ejb.Local;
 public interface UsersSBLocal {
     public Users getUser(String value);
     public List<Users> getUsers(Users u);
+    
     public Users saveUser(Users u);
 }

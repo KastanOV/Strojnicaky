@@ -169,6 +169,10 @@ public class Users implements Serializable {
     }
 
     public void setPassword(String password) {
+        if(!password.equals(this.password)){
+            this.password = HashPassword.md5Hash(password);
+            return;
+        }
         this.password = password;
     }
 

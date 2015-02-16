@@ -33,6 +33,9 @@
                         <li><a href="#">Hotovosti</a></li>
                     </ul>
                     <!--@Html.Partial("_LoginPartial")-->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/StrojnicakyV2/faces/logout.xhtml">Odhlásit</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -44,33 +47,7 @@
             <p><center>Created by Kaštura Jaroslav</center></p>
         </footer>
         
-        <!--<p:layout fullPage="true" rendered="#{loginBean.adminUser}">
-            <p:layoutUnit position="north" size="65" header="#{bundle.AdminAppName}   Příhlášen #{loginBean.userName}">
-                <h:form id="menuForm">
-                    <p:menubar>
-                        <p:menuitem value="Home" outcome="/index" icon="ui-icon-home"/>
-                        <p:submenu label="Maintance">
-                            <p:menuitem value="Attendance"  />
-                            <p:menuitem value="Informations" />
-                        </p:submenu>
-                        <p:menuitem actionListener="#{loginBean.logout()}" iconPos="right" value="Odhlásit" style="float: right contour"/> 
-                    </p:menubar>
-                    
-                </h:form>
-            </p:layoutUnit>
-            <p:layoutUnit position="west" size="290" header="#{bundle.dropdownStudyGroups}" collapsible="true">
-                <ui:insert name="west"/>
-            </p:layoutUnit>
-
-            <p:layoutUnit position="center">
-                <ui:insert name="body"/>
-            </p:layoutUnit>
-            
-            <p:layoutUnit position="south" size="60">
-                <center><p>Created by Kaštura Jaroslav</p></center>
-            </p:layoutUnit>
-
-        </p:layout>-->
+        
 
     </h:body>
     

@@ -34,7 +34,7 @@ public class UsersController {
     private Users loggedUser;
     private Users editedUser;
     private Boolean editButton;
-    private Boolean loggedUserIsAdmin;
+    
     private Date expirationDateTmp;
     private Opravneni editeOpravneni;
    
@@ -171,13 +171,7 @@ public class UsersController {
             editedUser.setRole("uz");
         }
     }
-    public Boolean getLoggedUserIsAdmin() {
-        return loggedUserIsAdmin;
-    }
-
-    public void setLoggedUserIsAdmin(Boolean loggedUserIsAdmin) {
-        this.loggedUserIsAdmin = loggedUserIsAdmin;
-    }
+    
     public void testmethod(){
         
     }

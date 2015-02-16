@@ -3,6 +3,8 @@
   <persistence-unit name="StrojnicakyV2PU" transaction-type="JTA">
     <jta-data-source>strojnicaky</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="create-tables"/>
+    </properties>
   </persistence-unit>
 </persistence>

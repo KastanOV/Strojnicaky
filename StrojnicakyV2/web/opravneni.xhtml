@@ -37,7 +37,7 @@
                                         </p:commandButton>
                                         
                                         <p:column style="width:130px">
-                                            <p:commandButton value="Smazat" icon="ui-icon-search" update="opravneniTable" >
+                                            <p:commandButton value="Smazat" icon="ui-icon-search" update="opravneniTable" disabled="#{!loginController.loggedUserIsAdmin}" >
                                                 <p:ajax listener="#{opravneniController.deleteOpravneni(item)}"/>
                                             </p:commandButton>
                                         </p:column>

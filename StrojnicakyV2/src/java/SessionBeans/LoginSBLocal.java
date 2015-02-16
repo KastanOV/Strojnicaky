@@ -15,4 +15,5 @@ import javax.ejb.Local;
 @Local
 public interface LoginSBLocal {
     public Users tryLogin(Users u);
+    public Users initAplication(Users u);
 }

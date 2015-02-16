@@ -22,11 +22,14 @@
                         <p:outputLabel value="Telefón" for="telf" />
                         <p:inputText id="telf" value="#{usersController.editedUser.phone}" title="Příjmení uživatele" required="true" />
                         <p:outputLabel value="Role" for="rolef" />
-                        <p:inputText id="rolef" value="#{usersController.editedUser.role}" title="Role uživate Velitel roty - vr, Velitel čety - vc" disabled="#{!usersController.loggedUserIsAdmin}" />
+                        <p:inputText id="rolef" value="#{usersController.editedUser.role}" title="Role uživate Velitel roty - vr, Velitel čety - vc" disabled="#{!loginController.loggedUserIsAdmin}" />
                         <p:outputLabel value="Rota" for="rotaf" />
-                        <p:inputText id="rotaf" value="#{usersController.editedUser.rota}" title="Příjmení uživatele" disabled="#{!usersController.loggedUserIsAdmin}" />
+                        <p:inputText id="rotaf" value="#{usersController.editedUser.rota}" title="Příjmení uživatele" disabled="#{!loginController.loggedUserIsAdmin}" />
                         <p:outputLabel value="Četa" for="rotaf" />
-                        <p:inputText id="lname" value="#{usersController.editedUser.ceta}" title="Příjmení uživatele" disabled="#{!usersController.loggedUserIsAdmin}" />
+                        <p:inputText id="lname" value="#{usersController.editedUser.ceta}" title="Příjmení uživatele" disabled="#{!loginController.loggedUserIsAdmin}" />
+                        <p:outputLabel value="Heslo" for="pass" rendered="#{loginController.loggedUserIsAdmin}" />
+                        <p:inputText id="pass" value="#{usersController.editedUser.password}" title="Příjmení uživatele" rendered="#{loginController.loggedUserIsAdmin}" />
+                        
                         <p:commandButton actionListener="#{usersController.saveUser()}" value="Uložit" update="display,:usersTableForm ,:growl" oncomplete="if (!args.validationFailed &amp;&amp; args.saved) PF('UsersEditDialog').hide();"/>
                     </p:panelGrid>
                 </h:panelGroup>

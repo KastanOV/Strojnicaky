@@ -13,7 +13,7 @@
                     <p:panelGrid columns="2" rendered="#{usersController.editeOpravneni != null}">
                         <p:outputLabel value="Nový datum expirace" for="oprCalendar" />
                         <p:calendar   id="oprCalendar" value="#{usersController.editeOpravneni.datumexpirace}" locale="cs" navigator="true" pattern="dd-MM-yyyy" />
-                        <p:commandButton actionListener="#{usersController.saveOpravneni}" value="Uložit" update="display,:strojnicakyTableForm ,:growl" oncomplete="PF('OpravneniUsersEditDialog').hide();"/>
+                        <p:commandButton actionListener="#{usersController.saveOpravneni}" value="Uložit"  update="display,:strojnicakyTableForm ,:growl" oncomplete="PF('OpravneniUsersEditDialog').hide();"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

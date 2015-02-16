@@ -23,7 +23,7 @@
                     </style>
                     
                     <div class="row" style="margin-top: 100px">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <h:form id="usersTableForm">
                                 <p:dataTable id="usersTable" var="usersTable" value="#{usersController.users}"
                                                     paginator="true"
@@ -43,10 +43,10 @@
                                         <p:column headerText="OEČ">
                                             <h:outputText value="#{usersTable.oec}"/>
                                         </p:column>
-                                    <p:column headerText="Rota" rendered="#{usersController.loggedUserIsAdmin}">
+                                    <p:column headerText="Rota" rendered="#{loginController.loggedUserIsAdmin}">
                                             <h:outputText value="#{usersTable.rota}"/>
                                         </p:column>
-                                        <p:column headerText="Četa" rendered="#{usersController.loggedUserIsAdmin}">
+                                    <p:column headerText="Četa" rendered="#{loginController.loggedUserIsAdmin}">
                                             <h:outputText value="#{usersTable.ceta}"/>
                                         </p:column>
                                         <p:column style="width:120px">
@@ -62,7 +62,7 @@
                                 </p:dataTable>
                             </h:form>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <h:form id="strojnicakyTableForm">
                                 <p:dataTable id="strojnicakyTable" var="str" value="#{usersController.getOpravneni()}"
                                              rowStyleClass="#{usersController.getBackgrounDangerColorO(str) ? 'success' : 'warning'}">

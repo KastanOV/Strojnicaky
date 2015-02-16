@@ -60,8 +60,9 @@ public class UsersSB implements UsersSBLocal {
             em.flush();
             return u;
         }
-        
     }
+    
+    
     
     private void createPassword(Users s){
         char[] symbols;
@@ -87,7 +88,7 @@ public class UsersSB implements UsersSBLocal {
                 .substring(0,3)
                 .toUpperCase()
                 .trim());
-        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM Users WHERE login LIKE ?createLogin")
+        Long numberOfLogin = (Long) em.createNativeQuery("SELECT COUNT(*) FROM users WHERE login LIKE ?createLogin")
                 .setParameter("createLogin", LoginPrefix + "%")
                 .getSingleResult();
         s.setLogin(LoginPrefix + getPostFix(String.valueOf(numberOfLogin)));

@@ -25,8 +25,10 @@ import javax.faces.context.FacesContext;
 public class LoginController {
     @EJB
     LoginSBLocal loginSB;
+    
 
     Users loggedUser;
+    private Boolean loggedUserIsAdmin;
 
     public Users getLoggedUser() {
         return loggedUser;
@@ -37,7 +39,15 @@ public class LoginController {
     }
     /**
      * Creates a new instance of login
+     * @return 
      */
+    public Boolean getLoggedUserIsAdmin() {
+        return loggedUserIsAdmin;
+    }
+
+    public void setLoggedUserIsAdmin(Boolean loggedUserIsAdmin) {
+        this.loggedUserIsAdmin = loggedUserIsAdmin;
+    }
     public LoginController() {
         if(loggedUser == null){
             loggedUser = new Users();
@@ -55,6 +65,11 @@ public class LoginController {
     }
     public void doLogin() {
         loggedUser = loginSB.tryLogin(loggedUser);
+        if(loggedUser.getRole().equals("admin")){
+            setLoggedUserIsAdmin(true);
+        }else {
+            setLoggedUserIsAdmin(false);
+        }
         if(loggedUser.getLname() != null){
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             try {
@@ -63,5 +78,27 @@ public class LoginController {
                 Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    public void doLogout(){
+        loggedUser = new Users();
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            try {
+                context.redirect("faces/login.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    public void initAplication(){
+        Users tmpUser = new Users();
+        tmpUser.setCeta(1000);
+        tmpUser.setFname("admin");
+        tmpUser.setLname("admin");
+        tmpUser.setLogin("admin");
+        tmpUser.setOec("admin");
+        tmpUser.setPassword("admin");
+        tmpUser.setPhone("admin");
+        tmpUser.setRole("admin");
+        tmpUser.setRota(1000);
+        loginSB.initAplication(tmpUser);
     }
 }
